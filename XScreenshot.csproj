@@ -7,10 +7,18 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <!--  Build a shared object file to be accessed by c# interop -->
-
+    <!-- Build a .so file to be accessed by c# interop -->
     <Target Name="BuildNativeLibrary" BeforeTargets="Build">
         <Exec Command="gcc -shared -o $(OutputPath)libstb_image_write.so -fPIC stb_image/stb_image_write_wrapper.c"/>
+    </Target>
+
+    <!-- Include the .so file in the publish output -->
+    <ItemGroup>
+        <NativeLib Include="$(OutputPath)libstb_image_write.so" />
+    </ItemGroup>
+
+    <Target Name="CopyNativeLibs" AfterTargets="Publish">
+        <Copy SourceFiles="@(NativeLib)" DestinationFolder="$(PublishDir)" />
     </Target>
 
 </Project>
