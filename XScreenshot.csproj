@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <!--  Build a shared object file to be accessed by c# interop -->
+
+    <Target Name="BuildNativeLibrary" BeforeTargets="Build">
+        <Exec Command="gcc -shared -o $(OutputPath)libstb_image_write.so -fPIC stb_image/stb_image_write_wrapper.c"/>
+    </Target>
+
+</Project>
